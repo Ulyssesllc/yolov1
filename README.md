@@ -1,6 +1,6 @@
 # YOLOv1 Custom Vehicle Detection
 
-This project implements YOLOv1 for vehicle detection using either the original Pascal VOC dataset or a custom dataset in Pascal VOC format (e.g., exported from Roboflow).
+This project implements YOLOv1 for vehicle detection using either the original Pascal VOC dataset or any custom dataset in Pascal VOC format (e.g., exported from Roboflow).
 
 ## Project Structure
 
@@ -20,7 +20,7 @@ main/
     infer.py
   utils/
     visualization_utils.py
-voc_format_data/  # For custom datasets
+<your_custom_dataset>/  # For custom datasets (example: my_dataset/)
   train/
   test/
   valid/ (optional)
@@ -69,14 +69,14 @@ data/  # For original Pascal VOC (VOC2007, VOC2012, etc.)
 ## Using a Custom Dataset (Pascal VOC Format)
 
 1. **Prepare Your Dataset**
-   - Place your Pascal VOC-format dataset in `voc_format_data/`.
+   - Place your Pascal VOC-format dataset in a folder (e.g., `my_dataset/`).
    - Each split (`train`, `test`, etc.) should contain `Annotations/`, `JPEGImages/`, and `ImageSets/Main/` with the appropriate `.txt` files listing image IDs.
 
 2. **Configure**
    - In `main/config/voc.yaml`, set:
      ```yaml
-     train_im_sets: ['voc_format_data/train']
-     test_im_sets: ['voc_format_data/test']
+     train_im_sets: ['my_dataset/train']
+     test_im_sets: ['my_dataset/test']
      num_classes: 1  # or the number of your custom classes
      ```
    - For a single class (e.g., 'car'), the dataset loader will use `['car']` by default. For multi-class, update the class list in `main/dataset/voc.py`.
@@ -91,13 +91,24 @@ data/  # For original Pascal VOC (VOC2007, VOC2012, etc.)
    python main/tools/infer.py --config main/config/voc.yaml --weights voc/yolo_voc2007.pth --img_path path/to/image.jpg
    ```
 
----
-
 
 ## Notes
 - The dataset loader and model are already adapted for both Pascal VOC and custom datasets.
 - For multi-class custom datasets, update the class list in `main/dataset/voc.py` and `num_classes` in the config.
 - For evaluation, use or adapt `tools/infer.py` or add a script for mAP/IoU calculation.
+
+
+
+## Results
+
+The following images are the predictions on the test folder of the custom `voc_format_data`, which is by default the dataset that this model works on (You may change the input data yourself accordingly to the instructions above)
+
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
+![alt text](image-6.png)
+
+
 
 ## License
 This project is for educational and research purposes.
